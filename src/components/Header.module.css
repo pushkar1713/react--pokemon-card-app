@@ -1,0 +1,59 @@
+.headerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  height: 50vh;
+  padding: 12px;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("https://retromash.com/wp-content/uploads/2021/06/pokemoncardsbanner.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+.headerInput {
+  width: 300px;
+  background-color: aliceblue;
+  height: 20px;
+  border-radius: 8px;
+  color: black;
+  text-indent: 8px;
+  padding: 4px;
+  margin: 0 auto;
+}
+
+.headerImage {
+  display: block;
+  width: 200px;
+}
+
+.headerImageSide {
+  display: block;
+  width: 20%;
+}
+
+.headerForm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerForm button {
+  padding: 6px 10px;
+  font-size: 14px;
+  border-width: 2px;
+  border-style: inset;
+  border-color: light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  border-image: initial;
+}
