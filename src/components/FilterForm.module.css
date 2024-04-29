@@ -6,9 +6,9 @@
   gap: 4px;
   margin: 16px;
   color: black;
-  font-size: 12px;
-  padding: 40px 12px;
-  width: 300px;
+  font-size: 16px;
+  padding: 40px 40px;
+  width: 250px;
 }
 
 .filterForm input,
@@ -16,9 +16,9 @@ select {
   background-color: white;
   border: 1px solid black;
   border-radius: 4px;
-  height: 20px;
+  height: 32px;
   color: black;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .filterForm button {
@@ -29,4 +29,15 @@ select {
 
 .filterForm label {
   margin-top: 8px;
+}
+
+.filterTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+#filterIcon {
+  font-size: 24px;
 }

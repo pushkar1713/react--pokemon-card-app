@@ -42,23 +42,23 @@ export const Main = ({ searchValue }: MainProps) => {
       .catch((error) => {
         console.log(new Error(error));
       });
-  }, [cards, searchValue]);
+  }, [searchValue]);
 
-  if (!isLoaded) {
-    return (
-      <div className="loading">
-        <h1>Loading...</h1>
+  return (
+    <>
+      <div className="main">
+        <FilterForm />
+        {!isLoaded && (
+          <div
+            style={{
+              color: "black",
+            }}
+          >
+            <h1>Loading...</h1>
+          </div>
+        )}
+        {isLoaded && <CardGrid cards={cards} />}
       </div>
-    );
-  } else {
-    return (
-      <>
-        <div>{searchValue && <h3>Result for: {searchValue}</h3>}</div>
-        <div className="main">
-          <FilterForm />
-          <CardGrid cards={cards} />
-        </div>
-      </>
-    );
-  }
+    </>
+  );
 };
