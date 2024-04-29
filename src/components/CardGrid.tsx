@@ -1,6 +1,8 @@
 import styles from "./CardGrid.module.css";
 import { Tilt } from "react-tilt";
 import { PokemonCard } from "./Main";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 const defaultOptions = {
   reverse: false, // reverse the tilt direction
@@ -22,29 +24,32 @@ export const CardGrid = ({ cards }: CardGridProps) => {
   return (
     <div className={styles.CardGrid}>
       {cards &&
-        cards.slice(0, 18).map((card) => (
+        cards.map((card) => (
           <div className={styles.cardContainer} key={card.id}>
             <Tilt options={defaultOptions}>
               <div>
                 <img src={card.images.large} className={styles.cardImage} />
               </div>
             </Tilt>
-            <div className={styles.cardText}>
-              <p>
-                <strong>{card.name}</strong>
-              </p>
-              <p>
-                <small>{card.types[0]}</small>
-              </p>
-              <p>
-                <small>{card.rarity}</small>
-              </p>
+            <div className={styles.cardDescription}>
+              <div className={styles.cardText}>
+                <p>
+                  <strong>{card.name}</strong>
+                </p>
+                <p>
+                  <small>{card.types[0]}</small>
+                </p>
+                <p>
+                  <small>{card.rarity}</small>
+                </p>
+              </div>
+              <FontAwesomeIcon
+                className={styles.cardAddIcon}
+                icon={faCirclePlus}
+              />
             </div>
           </div>
         ))}
-      <div className={styles.cardNoResult}>
-        <h2>No result !</h2>
-      </div>
     </div>
   );
 };

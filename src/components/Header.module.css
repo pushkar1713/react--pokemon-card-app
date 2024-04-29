@@ -12,6 +12,7 @@
     url("https://retromash.com/wp-content/uploads/2021/06/pokemoncardsbanner.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
 }
 
 .header {
@@ -25,18 +26,19 @@
 .headerInput {
   width: 300px;
   background-color: aliceblue;
-  height: 20px;
+  height: 30px;
   border-radius: 8px 0 0 8px;
   color: black;
   text-indent: 8px;
   padding: 4px;
   margin: 0 auto;
   border-right: none;
+  font-size: 16px;
 }
 
 .headerImage {
   display: block;
-  width: 200px;
+  width: 400px;
   margin-right: 32px;
 }
 
@@ -51,8 +53,8 @@
 }
 
 .headerForm button {
-  padding: 5px 10px;
-  font-size: 14px;
+  padding: 9px 10px;
+  font-size: 16px;
   border-radius: 0 8px 8px 0;
   border: none;
 }

@@ -2,7 +2,8 @@
   width: 100%;
   min-height: 100vh;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 160px);
+  grid-template-columns: repeat(auto-fit, 260px);
+  justify-content: center;
   gap: 12px;
   padding: 64px 12px;
   overflow: hidden;
@@ -18,8 +19,8 @@
 
 .cardText {
   color: black;
-  font-size: 10px;
-  margin: 0;
+  font-size: 16px;
+  margin-top: 20px;
 }
 
 .cardContainer {
@@ -38,4 +39,17 @@
 
 .cardNoResult {
   color: black;
+}
+
+.cardAddIcon {
+  color: black;
+  text-align: right;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.cardDescription {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 }

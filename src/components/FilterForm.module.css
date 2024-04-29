@@ -6,9 +6,9 @@
   gap: 4px;
   margin: 16px;
   color: black;
-  height: 400px;
   font-size: 12px;
   padding: 40px 12px;
+  width: 300px;
 }
 
 .filterForm input,
