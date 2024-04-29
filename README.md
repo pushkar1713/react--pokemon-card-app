@@ -1,30 +1,29 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Pokémon TCG Card Search
+This web application allows users to search for Pokémon Trading Card Game (TCG) cards using the Pokémon TCG API. It's built using React and TypeScript.
 
-Currently, two official plugins are available:
+<img width="1666" alt="pokecard-app" src="https://github.com/vincent-chpd/react--pokemon-card-app/assets/112076773/c69bf214-b5db-4c99-88e6-ba0463530258">
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Search: Users can search for Pokémon TCG cards by name.
+- Filter: Users can filter search results by card type and rarity.
+- Card Display: Search results are displayed in a grid format, showing card images and basic information.
+- Responsive Design: The website is optimized for various screen sizes, including mobile devices.
 
-## Expanding the ESLint configuration
+## Technologies Used
+- React: Front-end library for building user interfaces.
+- TypeScript: Typed superset of JavaScript for improved code quality and developer experience.
+- Pokémon TCG API: Provides access to Pokémon TCG card data.
+- CSS Modules: Allows for modular and scoped styling of React components.
+  
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Usage
+- Clone the repository to your local machine.
+- Install dependencies using npm install.
+- Get your Pokémon TCG API key from Pokémon TCG Developer Portal.
+- Set your API key as an environment variable named POKEMON_API_KEY.
+- Run the development server using npm start.
+- Access the website at http://localhost:3000 in your web browser.
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Contributing
+Contributions are welcome! If you'd like to contribute to this project, feel free to submit a pull request! 
