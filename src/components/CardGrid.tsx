@@ -27,7 +27,7 @@ export const CardGrid = ({ cards }: CardGridProps) => {
         cards.map((card) => (
           <div className={styles.cardContainer} key={card.id}>
             <Tilt options={defaultOptions}>
-              <div>
+              <div onClick={() => console.log("clicked")}>
                 <img src={card.images.large} className={styles.cardImage} />
               </div>
             </Tilt>
