@@ -41,6 +41,7 @@ export const FilterForm = ({ onFilterChange }: FilterFormProps) => {
         <option value="metal">Metal</option>
         <option value="psychic">Psychic</option>
       </select>
+
       <label htmlFor="rare">By Rarity</label>
       <select
         name="rare"
@@ -51,9 +52,22 @@ export const FilterForm = ({ onFilterChange }: FilterFormProps) => {
         <option value="">Select Rarity</option>
         <option value="Common">Common</option>
         <option value="Uncommon">Uncommon</option>
-        <option value="Rare Holo GX">Rare Holo GX</option>
+        <option value="Rare Holo">Rare Holo</option>
         <option value="Rare Ultra">Rare Ultra</option>
         <option value="Shiny Rare">Shiny Rare</option>
+      </select>
+
+      <label htmlFor="supertype">By Supertype</label>
+      <select
+        name="rare"
+        id="rare"
+        value={rarity}
+        onChange={(e) => setRarity(e.target.value)}
+      >
+        <option value="">Select Supertype</option>
+        <option value="Energy">Energy</option>
+        <option value="Pokémon">Pokémon</option>
+        <option value="Trainer">Trainer</option>
       </select>
     </form>
   );

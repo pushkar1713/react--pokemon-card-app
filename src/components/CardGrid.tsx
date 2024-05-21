@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import styles from "./CardGrid.module.css";
 import { Tilt } from "react-tilt";
 import { PokemonCard } from "./Main";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import CardModal from "./CardModal";
 
 const defaultOptions = {
   reverse: false, // reverse the tilt direction
@@ -20,14 +22,27 @@ type CardGridProps = {
   cards: PokemonCard[];
 };
 
-export const CardGrid = ({ cards }: CardGridProps) => {
+export const CardGrid: React.FC<CardGridProps> = ({ cards }) => {
+  const [selectedCard, setSelectedCard] = useState<PokemonCard | null>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = (card: PokemonCard) => {
+    setSelectedCard(card);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedCard(null);
+    setModalIsOpen(false);
+  };
+
   return (
     <div className={styles.CardGrid}>
       {cards &&
         cards.map((card) => (
           <div className={styles.cardContainer} key={card.id}>
             <Tilt options={defaultOptions}>
-              <div onClick={() => console.log("clicked")}>
+              <div onClick={() => openModal(card)}>
                 <img src={card.images.large} className={styles.cardImage} />
               </div>
             </Tilt>
@@ -50,6 +65,11 @@ export const CardGrid = ({ cards }: CardGridProps) => {
             </div>
           </div>
         ))}
+      <CardModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        card={selectedCard}
+      />
     </div>
   );
 };

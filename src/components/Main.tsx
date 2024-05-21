@@ -62,8 +62,8 @@ export const Main = ({ searchValue }: MainProps) => {
       <FilterForm onFilterChange={setFilters} />
       {isLoaded ? (
         cards.length === 0 ? (
-          <div style={{ color: "black" }}>
-            <h1>No results</h1>
+          <div className="no-result" style={{ color: "black" }}>
+            <h2>No results</h2>
           </div>
         ) : (
           <CardGrid cards={cards} />
