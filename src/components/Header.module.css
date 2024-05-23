@@ -1,10 +1,10 @@
 .headerContainer {
+  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
   height: 50vh;
-  padding: 12px;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
@@ -13,6 +13,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 }
 
 .header {
@@ -40,7 +41,6 @@
 .headerImage {
   display: block;
   width: 400px;
-  margin-right: 32px;
 }
 
 .headerImageSide {
@@ -64,5 +64,33 @@
   }
   &:hover {
     background-color: rgb(101, 0, 0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .headerForm button {
+    width: 50px;
+  }
+
+  .headerForm {
+    width: 200px;
+  }
+
+  .headerInput {
+    width: 300px;
+
+    color: black;
+    text-indent: 8px;
+    font-size: 12px;
+  }
+
+  .headerImage {
+    display: block;
+    width: 300px;
+  }
+
+  .headerContainer {
+    height: 30vh;
   }
 }

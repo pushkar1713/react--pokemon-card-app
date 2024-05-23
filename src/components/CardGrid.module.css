@@ -1,6 +1,5 @@
 .CardGrid {
   width: 100%;
-  min-height: 100vh;
   display: grid;
   grid-template-columns: repeat(auto-fit, 260px);
   justify-content: center;
@@ -8,6 +7,7 @@
   padding: 64px 12px;
   overflow: hidden;
   border-left: 1px solid rgb(244, 240, 240);
+  position: relative;
 }
 
 .cardImage {
@@ -53,4 +53,10 @@
   display: flex;
   justify-content: space-between;
   align-items: end;
+}
+
+@media (max-width: 768px) {
+  .CardGrid {
+    padding: 0;
+  }
 }

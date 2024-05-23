@@ -66,3 +66,11 @@ p {
 .no-result h2 {
   margin: 20px 100px;
 }
+
+@media (max-width: 768px) {
+  .main {
+    flex-wrap: wrap;
+    width: 100%;
+    overflow: hidden;
+  }
+}
