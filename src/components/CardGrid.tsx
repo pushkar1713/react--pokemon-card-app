@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./CardGrid.module.css";
 import { Tilt } from "react-tilt";
-import { PokemonCard } from "./Main";
+import { PokemonCard } from "./SearchPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import CardModal from "./CardModal";

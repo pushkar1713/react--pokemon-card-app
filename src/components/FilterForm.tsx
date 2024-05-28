@@ -26,7 +26,7 @@ export const FilterForm = ({ onFilterChange }: FilterFormProps) => {
   };
 
   return (
-    <div>
+    <div className={styles.filterFormContainer}>
       <button className={styles.hamburger} onClick={toggleMenu}>
         <FontAwesomeIcon icon={faFilter} className={styles.filterIcon} />
       </button>
@@ -35,7 +35,7 @@ export const FilterForm = ({ onFilterChange }: FilterFormProps) => {
           <FontAwesomeIcon id={styles.filterIcon} icon={faFilter} />
           <h2>Filter</h2>
         </div>
-        <label htmlFor="type">By Type</label>
+
         <select
           name="type"
           id="type"
@@ -56,7 +56,6 @@ export const FilterForm = ({ onFilterChange }: FilterFormProps) => {
           <option value="psychic">Psychic</option>
         </select>
 
-        <label htmlFor="rarity">By Rarity</label>
         <select
           name="rarity"
           id="rarity"
@@ -71,7 +70,6 @@ export const FilterForm = ({ onFilterChange }: FilterFormProps) => {
           <option value="Shiny Rare">Shiny Rare</option>
         </select>
 
-        <label htmlFor="supertype">By Supertype</label>
         <select
           name="supertype"
           id="supertype"

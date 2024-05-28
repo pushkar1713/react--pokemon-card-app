@@ -1,42 +1,36 @@
+import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import { useState } from "react";
 
-type HeaderProps = {
-  onSearchSubmit: (searchValue: string) => void;
-};
-
-export const Header = ({ onSearchSubmit }: HeaderProps) => {
-  const [searchValue, setSearchValue] = useState("");
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-  };
-
-  const handleClick = () => {
-    onSearchSubmit(searchValue);
-  };
-
+const Header = () => {
   return (
     <header className={styles.headerContainer}>
-      <div className={styles.header}>
-        <img
-          className={styles.headerImage}
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Pok%C3%A9mon_Trading_Card_Game_logo.svg/2880px-Pok%C3%A9mon_Trading_Card_Game_logo.svg.png"
-          alt="pokemon logo"
-        />
-        <div className={styles.headerForm}>
-          <input
-            className={styles.headerInput}
-            type="text"
-            placeholder="Type a Pokemon name..."
-            onChange={handleSearch}
-            value={searchValue}
-          />
-          <button className={styles.headerFormBtn} onClick={handleClick}>
-            Search
-          </button>
+      <div className={styles.headerText}>
+        <h1>
+          Pokémon TCG Search - <br /> Ultimate <br />
+          <span className={styles.textGradient}>Trading Card</span> <br />
+          Experience.
+        </h1>
+        <p>
+          Built specifcally for card collectors <br />
+          and Pokemon enthusiasts
+        </p>
+        <div className={styles.headerButtons}>
+          <Link to="/search">
+            <button>Search Cards</button>
+          </Link>
+          <Link to="/pokedex">
+            <button>Explore Pokedex</button>
+          </Link>
         </div>
+      </div>
+      <div>
+        <img
+          src="https://pokemon-tcg-v1.netlify.app/static/media/pikachu.31bf5db7acb73a02b1bf.png"
+          alt="image of pikachu"
+        />
       </div>
     </header>
   );
 };
+
+export { Header };

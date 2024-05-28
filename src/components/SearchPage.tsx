@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { FilterForm } from "./FilterForm";
 import { CardGrid } from "./CardGrid";
+import styles from "../components/SearchPage.module.css";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
 
 export type PokemonCard = {
   id: string;
@@ -23,9 +26,11 @@ export const Main = ({ searchValue }: MainProps) => {
   const [cards, setCards] = useState<PokemonCard[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filters, setFilters] = useState({ type: "", rarity: "" });
+  const [search, setSearch] = useState(searchValue);
+  const [inputValue, setInputValue] = useState(searchValue); // State to manage input field value
 
   useEffect(() => {
-    let query = `https://api.pokemontcg.io/v2/cards?q=name:${searchValue}*`;
+    let query = `https://api.pokemontcg.io/v2/cards?q=name:${search}*`;
     if (filters.type && filters.rarity) {
       query += ` types:${filters.type} rarity:${filters.rarity}`;
     } else if (filters.type) {
@@ -55,10 +60,39 @@ export const Main = ({ searchValue }: MainProps) => {
       .finally(() => {
         setIsLoaded(true); // Set loading state to false after fetch
       });
-  }, [searchValue, filters]);
+  }, [search, filters]); // Only run the effect when `search` or `filters` change
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value); // Update inputValue state with the typed value
+  };
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSearch(inputValue); // Update the search state with the input value on form submit
+  };
+
+  const clearSearch = () => {
+    setInputValue(""); // Clear the input value
+    setSearch(""); // Clear the search
+  };
 
   return (
-    <div className="main">
+    <div className={styles.searchPageContainer}>
+      <form onSubmit={handleSearchSubmit}>
+        <InputGroup>
+          <Input
+            type="text"
+            value={inputValue} // Bind input value to inputValue state
+            onChange={handleSearchChange} // Handle input change
+            placeholder="Search Pokémon"
+          />
+          {inputValue && ( // Render close icon only when there is a value in the input field
+            <InputRightElement onClick={clearSearch} cursor="pointer">
+              <CloseIcon />
+            </InputRightElement>
+          )}
+        </InputGroup>
+      </form>
       <FilterForm onFilterChange={setFilters} />
       {isLoaded ? (
         cards.length === 0 ? (
