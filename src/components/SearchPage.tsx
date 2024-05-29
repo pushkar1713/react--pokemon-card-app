@@ -14,29 +14,36 @@ export type PokemonCard = {
   name: string;
   types: string[];
   rarity: string;
+  supertype: string;
 };
 
 const pokemonApiKey = import.meta.env.VITE_POKEMON_API_KEY;
 
-type MainProps = {
+type SearchProps = {
   searchValue: string;
 };
 
-export const Main = ({ searchValue }: MainProps) => {
+export const Search = ({ searchValue }: SearchProps) => {
   const [cards, setCards] = useState<PokemonCard[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [filters, setFilters] = useState({ type: "", rarity: "" });
+  const [filters, setFilters] = useState({
+    type: "",
+    rarity: "",
+    supertype: "",
+  });
   const [search, setSearch] = useState(searchValue);
   const [inputValue, setInputValue] = useState(searchValue); // State to manage input field value
 
   useEffect(() => {
     let query = `https://api.pokemontcg.io/v2/cards?q=name:${search}*`;
-    if (filters.type && filters.rarity) {
-      query += ` types:${filters.type} rarity:${filters.rarity}`;
+    if (filters.type && filters.rarity && filters.supertype) {
+      query += ` types:${filters.type} rarity:${filters.rarity} supertype:${filters.supertype}`;
     } else if (filters.type) {
       query += ` types:${filters.type}`;
     } else if (filters.rarity) {
       query += ` rarity:${filters.rarity}`;
+    } else if (filters.supertype) {
+      query += ` rarity:${filters.supertype}`;
     }
 
     const request = new Request(query, {
@@ -81,6 +88,7 @@ export const Main = ({ searchValue }: MainProps) => {
       <form onSubmit={handleSearchSubmit}>
         <InputGroup>
           <Input
+            size="lg"
             type="text"
             value={inputValue} // Bind input value to inputValue state
             onChange={handleSearchChange} // Handle input change

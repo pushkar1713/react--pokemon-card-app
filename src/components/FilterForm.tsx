@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./FilterForm.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { Select } from "@chakra-ui/react";
 
 type FilterFormProps = {
   onFilterChange: (filters: {
@@ -36,7 +37,7 @@ export const FilterForm = ({ onFilterChange }: FilterFormProps) => {
           <h2>Filter</h2>
         </div>
 
-        <select
+        <Select
           name="type"
           id="type"
           value={type}
@@ -54,23 +55,24 @@ export const FilterForm = ({ onFilterChange }: FilterFormProps) => {
           <option value="lightning">Lightning</option>
           <option value="metal">Metal</option>
           <option value="psychic">Psychic</option>
-        </select>
+        </Select>
 
-        <select
+        <Select
           name="rarity"
           id="rarity"
           value={rarity}
           onChange={(e) => setRarity(e.target.value)}
         >
           <option value="">Select Rarity</option>
-          <option value="Common">Common</option>
-          <option value="Uncommon">Uncommon</option>
-          <option value="Rare Holo">Rare Holo</option>
-          <option value="Rare Ultra">Rare Ultra</option>
-          <option value="Shiny Rare">Shiny Rare</option>
-        </select>
+          <option value='"Common"'>Common</option>
+          <option value='"Uncommon"'>Uncommon</option>
+          <option value='"Rare"'>Rare</option>
+          <option value='"Rare Holo"'>Rare Holo</option>
+          <option value='"Rare Ultra"'>Rare Ultra</option>
+          <option value='"Shiny Rare"'>Shiny Rare</option>
+        </Select>
 
-        <select
+        <Select
           name="supertype"
           id="supertype"
           value={supertype}
@@ -80,7 +82,7 @@ export const FilterForm = ({ onFilterChange }: FilterFormProps) => {
           <option value="Energy">Energy</option>
           <option value="Pokémon">Pokémon</option>
           <option value="Trainer">Trainer</option>
-        </select>
+        </Select>
       </form>
     </div>
   );
