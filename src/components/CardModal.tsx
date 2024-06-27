@@ -3,7 +3,6 @@ import React from "react";
 import Modal from "react-modal";
 import styles from "./CardModal.module.css";
 
-// Define the type for the card prop
 type Card = {
   id: string;
   name: string;
@@ -12,7 +11,6 @@ type Card = {
   };
   types: string[];
   rarity: string;
-  // Add other attributes as needed
 };
 
 type CardModalProps = {
@@ -58,8 +56,6 @@ const CardModal: React.FC<CardModalProps> = ({
             <div className={styles.cardDetailsRow}>
               <p>Rarity:</p> <p>{card.rarity}</p>
             </div>
-
-            {/* Add more attributes as needed */}
           </div>
         </div>
       </div>

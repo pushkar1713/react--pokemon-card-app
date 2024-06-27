@@ -4,9 +4,8 @@
   grid-template-columns: repeat(auto-fit, 260px);
   justify-content: center;
   gap: 12px;
-  padding: 64px 12px;
+  padding: 64px 36px;
   overflow: hidden;
-  border-left: 1px solid rgb(244, 240, 240);
   position: relative;
 }
 

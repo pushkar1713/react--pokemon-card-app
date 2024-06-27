@@ -32,7 +32,7 @@ export const Search = ({ searchValue }: SearchProps) => {
     supertype: "",
   });
   const [search, setSearch] = useState(searchValue);
-  const [inputValue, setInputValue] = useState(searchValue); // State to manage input field value
+  const [inputValue, setInputValue] = useState(searchValue);
 
   useEffect(() => {
     let query = `https://api.pokemontcg.io/v2/cards?q=name:${search}*`;
@@ -53,34 +53,34 @@ export const Search = ({ searchValue }: SearchProps) => {
       },
     });
 
-    setIsLoaded(false); // Set loading state to true before fetch
+    setIsLoaded(false);
 
     fetch(request)
       .then((response) => response.json())
       .then(({ data }) => {
-        setCards(data || []); // Ensure cards is an array
+        setCards(data || []);
       })
       .catch((error) => {
         console.error(new Error(error));
-        setCards([]); // Set cards to an empty array on error
+        setCards([]);
       })
       .finally(() => {
-        setIsLoaded(true); // Set loading state to false after fetch
+        setIsLoaded(true);
       });
-  }, [search, filters]); // Only run the effect when `search` or `filters` change
+  }, [search, filters]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value); // Update inputValue state with the typed value
+    setInputValue(event.target.value);
   };
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSearch(inputValue); // Update the search state with the input value on form submit
+    setSearch(inputValue);
   };
 
   const clearSearch = () => {
-    setInputValue(""); // Clear the input value
-    setSearch(""); // Clear the search
+    setInputValue("");
+    setSearch("");
   };
 
   return (
@@ -90,11 +90,11 @@ export const Search = ({ searchValue }: SearchProps) => {
           <Input
             size="lg"
             type="text"
-            value={inputValue} // Bind input value to inputValue state
-            onChange={handleSearchChange} // Handle input change
+            value={inputValue}
+            onChange={handleSearchChange}
             placeholder="Search Pokémon"
           />
-          {inputValue && ( // Render close icon only when there is a value in the input field
+          {inputValue && (
             <InputRightElement onClick={clearSearch} cursor="pointer">
               <CloseIcon />
             </InputRightElement>
