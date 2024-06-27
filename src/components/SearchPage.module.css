@@ -12,3 +12,10 @@
   display: flex;
   gap: 20px;
 }
+
+.pageButtons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}

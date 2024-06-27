@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../components/PokedexPage.module.css";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
+import useFetch from "../hooks/useFetch"; // Adjust the path as necessary
 
 type Pokemon = {
   id: number;
@@ -21,70 +22,41 @@ type PokedexProps = {
 };
 
 const Pokedex: React.FC<PokedexProps> = ({ searchValue = "" }) => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState(searchValue);
   const [inputValue, setInputValue] = useState(searchValue);
-  const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
-  const [error, setError] = useState<string | null>(null);
+
+  const {
+    data: pokemon,
+    isLoading: isLoadingPokemon,
+    error: errorPokemon,
+  } = useFetch<Pokemon>(
+    search ? `https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}` : "",
+  );
+
+  const {
+    data: initialPokemonData,
+    isLoading: isLoadingList,
+    error: errorList,
+  } = useFetch<{ results: { name: string }[] }>(
+    search ? "" : "https://pokeapi.co/api/v2/pokemon?limit=151",
+  );
 
   useEffect(() => {
-    if (search) {
-      setLoading(true);
-      setError(null);
-      const query = `https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}`;
-
-      const getPokemons = setTimeout(() => {
-        fetch(query)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Pokemon not found");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            setPokemon(data);
-            setPokemonList([]);
-          })
-          .catch((err) => {
-            setError(err.message);
-            setPokemon(null);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      }, 2000);
-
-      return () => clearTimeout(getPokemons);
-    } else {
-      fetchInitialPokemonList();
-    }
-  }, [search]);
-
-  const fetchInitialPokemonList = () => {
-    setLoading(true);
-    setError(null);
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
-      .then((response) => response.json())
-      .then((data) => {
-        const fetches = data.results.map((pokemon: { name: string }) =>
-          fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`).then(
-            (response) => response.json(),
+    if (!search && initialPokemonData) {
+      const fetchAllPokemon = async () => {
+        const promises = initialPokemonData.results.map(({ name }) =>
+          fetch(`https://pokeapi.co/api/v2/pokemon/${name}`).then((res) =>
+            res.json(),
           ),
         );
-        return Promise.all(fetches);
-      })
-      .then((pokemons) => {
-        setPokemonList(pokemons);
-        setPokemon(null);
-      })
-      .catch((err) => {
-        setError(err.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+        const results = await Promise.all(promises);
+        setPokemonList(results);
+      };
+
+      fetchAllPokemon();
+    }
+  }, [initialPokemonData, search]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -118,26 +90,30 @@ const Pokedex: React.FC<PokedexProps> = ({ searchValue = "" }) => {
           )}
         </InputGroup>
       </form>
-      {loading ? (
+      {isLoadingPokemon || isLoadingList ? (
         <div className="modal">
           <div className="modal-content">
             <div className="spinner"></div>
           </div>
         </div>
-      ) : error ? (
-        <div className="error">{error}</div>
+      ) : errorPokemon || errorList ? (
+        <div className="error">{errorPokemon || errorList}</div>
       ) : pokemon ? (
         <div className={styles.pokemonList}>
           <div key={pokemon.id} className={styles.pokemonListItem}>
-            <img
-              className={styles.pokemonImage}
-              src={pokemon.sprites.front_default}
-              alt={pokemon.name}
-            />
+            {pokemon.sprites && pokemon.sprites.front_default && (
+              <img
+                className={styles.pokemonImage}
+                src={pokemon.sprites.front_default}
+                alt={pokemon.name}
+              />
+            )}
             <div className={styles.pokedexListText}>
               <div>
                 <h2>{pokemon.name}</h2>
-                <p>{pokemon.types[0].type.name}</p>
+                {pokemon.types && pokemon.types[0] && (
+                  <p>{pokemon.types[0].type.name}</p>
+                )}
               </div>
               <h3>#{("00" + pokemon.id).slice(-3)}</h3>
             </div>
@@ -147,15 +123,19 @@ const Pokedex: React.FC<PokedexProps> = ({ searchValue = "" }) => {
         <div className={styles.pokemonList}>
           {pokemonList.map((pokemon) => (
             <div key={pokemon.id} className={styles.pokemonListItem}>
-              <img
-                className={styles.pokemonImage}
-                src={pokemon.sprites.front_default}
-                alt={pokemon.name}
-              />
+              {pokemon.sprites && pokemon.sprites.front_default && (
+                <img
+                  className={styles.pokemonImage}
+                  src={pokemon.sprites.front_default}
+                  alt={pokemon.name}
+                />
+              )}
               <div className={styles.pokedexListText}>
                 <div>
                   <h2>{pokemon.name.toUpperCase()}</h2>
-                  <p>{pokemon.types[0].type.name}</p>
+                  {pokemon.types && pokemon.types[0] && (
+                    <p>{pokemon.types[0].type.name}</p>
+                  )}
                 </div>
                 <h3>#{("00" + pokemon.id).slice(-3)}</h3>
               </div>

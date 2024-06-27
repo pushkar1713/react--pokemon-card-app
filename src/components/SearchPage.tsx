@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { FilterForm } from "./FilterForm";
 import { CardGrid } from "./CardGrid";
 import styles from "../components/SearchPage.module.css";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
+import useFetch from "../hooks/useFetch";
 
 export type PokemonCard = {
   id: string;
@@ -17,15 +18,11 @@ export type PokemonCard = {
   supertype: string;
 };
 
-const pokemonApiKey = import.meta.env.VITE_POKEMON_API_KEY;
-
 type SearchProps = {
   searchValue: string;
 };
 
 export const Search = ({ searchValue }: SearchProps) => {
-  const [cards, setCards] = useState<PokemonCard[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [filters, setFilters] = useState({
     type: "",
     rarity: "",
@@ -33,41 +30,21 @@ export const Search = ({ searchValue }: SearchProps) => {
   });
   const [search, setSearch] = useState(searchValue);
   const [inputValue, setInputValue] = useState(searchValue);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(20);
 
-  useEffect(() => {
+  const buildQuery = useCallback(() => {
     let query = `https://api.pokemontcg.io/v2/cards?q=name:${search}*`;
-    if (filters.type && filters.rarity && filters.supertype) {
-      query += ` types:${filters.type} rarity:${filters.rarity} supertype:${filters.supertype}`;
-    } else if (filters.type) {
-      query += ` types:${filters.type}`;
-    } else if (filters.rarity) {
-      query += ` rarity:${filters.rarity}`;
-    } else if (filters.supertype) {
-      query += ` rarity:${filters.supertype}`;
-    }
+    if (filters.type) query += ` types:${filters.type}`;
+    if (filters.rarity) query += ` rarity:${filters.rarity}`;
+    if (filters.supertype) query += ` supertype:${filters.supertype}`;
+    query += `&page=${currentPage}&pageSize=${pageSize}`;
+    return query;
+  }, [search, filters, currentPage, pageSize]);
 
-    const request = new Request(query, {
-      method: "GET",
-      headers: {
-        "X-Api-Key": pokemonApiKey,
-      },
-    });
-
-    setIsLoaded(false);
-
-    fetch(request)
-      .then((response) => response.json())
-      .then(({ data }) => {
-        setCards(data || []);
-      })
-      .catch((error) => {
-        console.error(new Error(error));
-        setCards([]);
-      })
-      .finally(() => {
-        setIsLoaded(true);
-      });
-  }, [search, filters]);
+  const { data, isLoading, error } = useFetch<{ data: PokemonCard[] }>(
+    buildQuery(),
+  );
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -76,12 +53,22 @@ export const Search = ({ searchValue }: SearchProps) => {
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSearch(inputValue);
+    setCurrentPage(1);
   };
 
   const clearSearch = () => {
     setInputValue("");
     setSearch("");
+    setCurrentPage(1);
   };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters]);
 
   return (
     <div className={styles.searchPageContainer}>
@@ -102,21 +89,39 @@ export const Search = ({ searchValue }: SearchProps) => {
         </InputGroup>
       </form>
       <FilterForm onFilterChange={setFilters} />
-      {isLoaded ? (
-        cards.length === 0 ? (
-          <div className="no-result" style={{ color: "black" }}>
-            <h2>No results</h2>
-          </div>
-        ) : (
-          <CardGrid cards={cards} />
-        )
-      ) : (
+      {isLoading ? (
         <div className="modal">
           <div className="modal-content">
             <div className="spinner"></div>
           </div>
         </div>
+      ) : error ? (
+        <div className="error">{error}</div>
+      ) : data && data.data.length === 0 ? (
+        <div className="no-result" style={{ color: "black" }}>
+          <h2>No results</h2>
+        </div>
+      ) : (
+        <>
+          <CardGrid cards={data?.data || []} />
+          <div className={styles.pageButtons}>
+            <Button
+              onClick={() => handlePageChange(currentPage - 1)}
+              isDisabled={currentPage === 1}
+            >
+              Previous
+            </Button>
+            <Button
+              onClick={() => handlePageChange(currentPage + 1)}
+              isDisabled={!data || data.data.length < pageSize}
+            >
+              Next
+            </Button>
+          </div>
+        </>
       )}
     </div>
   );
 };
+
+export default Search;
