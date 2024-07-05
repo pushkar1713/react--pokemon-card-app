@@ -13,6 +13,7 @@
   display: block;
   width: 100%;
   height: auto;
+  max-height: 335px;
   border-radius: 8px;
   cursor: pointer;
 }

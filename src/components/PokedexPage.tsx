@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../components/PokedexPage.module.css";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-import useFetch from "../hooks/useFetch"; // Adjust the path as necessary
+import useFetch from "../hooks/useFetch";
 
 type Pokemon = {
   id: number;
@@ -52,6 +52,7 @@ const Pokedex: React.FC<PokedexProps> = ({ searchValue = "" }) => {
         );
         const results = await Promise.all(promises);
         setPokemonList(results);
+        console.log(results);
       };
 
       fetchAllPokemon();

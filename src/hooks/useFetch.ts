@@ -26,6 +26,7 @@ const useFetch = <T>(url: string): FetchState<T> => {
         const result = await response.json();
         setIsLoading(false);
         setData(result);
+        console.log(result);
       } catch (err) {
         if (err instanceof Error) {
           setError(`Error: ${err.message}`);

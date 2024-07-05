@@ -55,7 +55,9 @@ export const CardGrid: React.FC<CardGridProps> = ({ cards }) => {
                   <small>{card.types[0]}</small>
                 </p>
                 <p>
-                  <small>{card.rarity}</small>
+                  <small>
+                    {card.rarity === undefined ? "Common" : card.rarity}
+                  </small>
                 </p>
               </div>
               <FontAwesomeIcon
